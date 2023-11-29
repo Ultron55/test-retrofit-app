@@ -11,6 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import test.task.app.api.RetrofitClient
 import test.task.app.api.RetrofitServices
+import test.task.app.authorization.Payments
 import test.task.app.authorization.Token
 import test.task.app.authorization.User
 import test.task.app.utils.inDevDebugLog
@@ -35,6 +36,7 @@ class MainViewModel : ViewModel() {
                     token = response.body().response.token
                     inDevDebugLog("${response.code()}")
                     loginIs.postValue(response.isSuccessful)
+                    getPayments()
                 }
 
                 override fun onFailure(call: Call<Token>?, t: Throwable?) {
@@ -43,6 +45,26 @@ class MainViewModel : ViewModel() {
                 }
             })
         }
+    }
+
+    fun getPayments() {
+        if (token == null) return
+        retrofitServices.getPayments(token!!).enqueue(object : Callback<Payments> {
+            override fun onResponse(call: Call<Payments>?, response: Response<Payments>?) {
+                if (response == null) inDevDebugLog(null)
+                else {
+                    inDevDebugLog(response.body())
+                    response.body().response.forEach{
+                        inDevDebugLog("${it.id} ${it.title} ${it.amount} ${it.created}")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Payments>?, t: Throwable?) {
+                Log.e("getPayments", t?.message.toString())
+            }
+
+        })
     }
 }
 
