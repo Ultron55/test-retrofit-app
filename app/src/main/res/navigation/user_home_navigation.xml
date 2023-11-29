@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/user_home_navigation"
+    app:startDestination="@id/payments_nav">
+
+    <fragment
+        android:id="@+id/payments_nav"
+        android:name="test.task.app.userhome.PaymentsFragment"
+        android:label="@string/payments"
+        tools:layout="@layout/payments">
+    </fragment>
+
+</navigation>

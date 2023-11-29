@@ -4,39 +4,37 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import test.task.app.api.RetrofitClient
-import test.task.app.api.RetrofitServices
+import test.task.app.api.RetrofitAPI
 import test.task.app.authorization.Payments
 import test.task.app.authorization.Token
 import test.task.app.authorization.User
 import test.task.app.utils.inDevDebugLog
+import test.task.app.utils.preferences.PreferencesContract
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
-    private val BASE_URL = "https://easypay.world/"
-    val retrofitServices: RetrofitServices
-        get() = RetrofitClient.getClient(BASE_URL).create(RetrofitServices::class.java)
+@HiltViewModel
+class MainViewModel @Inject constructor(val preferences: PreferencesContract) : ViewModel() {
     val loginIs = MutableLiveData<Boolean>()
-    var token : String? = null
 
     fun login(login: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val user = User(login, password)
-            retrofitServices.postLogin(user).enqueue(object : Callback<Token> {
+            RetrofitAPI.retrofitServices.postLogin(user).enqueue(object : Callback<Token> {
                 override fun onResponse(call: Call<Token>,
                                         response: Response<Token>) {
-                    inDevDebugLog(call.request().headers())
-                    inDevDebugLog(call.request())
-                    inDevDebugLog("${response.isSuccessful}")
-                    inDevDebugLog("body ${response.body()}")
-                    token = response.body().response.token
-                    inDevDebugLog("${response.code()}")
-                    loginIs.postValue(response.isSuccessful)
-                    getPayments()
+                    RetrofitAPI.token =
+                        if (response.body().success)
+                            response.body().response.token
+                        else
+                            null
+                    preferences.saveToken(RetrofitAPI.token)
+                    loginIs.postValue(response.body().success)
                 }
 
                 override fun onFailure(call: Call<Token>?, t: Throwable?) {
@@ -47,24 +45,39 @@ class MainViewModel : ViewModel() {
         }
     }
 
+
+    fun checkLogined(): Boolean {
+        val token: String? = RetrofitAPI.token ?: preferences.getToken()
+        RetrofitAPI.token = token
+        preferences.saveToken(token)
+        return token != null
+    }
+
     fun getPayments() {
-        if (token == null) return
-        retrofitServices.getPayments(token!!).enqueue(object : Callback<Payments> {
-            override fun onResponse(call: Call<Payments>?, response: Response<Payments>?) {
-                if (response == null) inDevDebugLog(null)
-                else {
-                    inDevDebugLog(response.body())
-                    response.body().response.forEach{
-                        inDevDebugLog("${it.id} ${it.title} ${it.amount} ${it.created}")
+        if (RetrofitAPI.token == null) return
+        RetrofitAPI.retrofitServices.getPayments(RetrofitAPI.token!!)
+            .enqueue(object : Callback<Payments> {
+                override fun onResponse(call: Call<Payments>?, response: Response<Payments>?) {
+                    if (response == null) inDevDebugLog(null)
+                    else {
+                        inDevDebugLog(response.body())
+                        response.body().response.forEach{
+                            inDevDebugLog("${it.id} ${it.title} ${it.amount} ${it.created}")
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<Payments>?, t: Throwable?) {
-                Log.e("getPayments", t?.message.toString())
-            }
+                override fun onFailure(call: Call<Payments>?, t: Throwable?) {
+                    Log.e("getPayments", t?.message.toString())
+                }
+            })
+    }
 
-        })
+    fun logout(): Boolean{
+        RetrofitAPI.token = null
+        loginIs.postValue(false)
+        preferences.saveToken(null)
+        return RetrofitAPI.token.equals(null)
     }
 }
 

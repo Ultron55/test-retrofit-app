@@ -12,4 +12,13 @@
     <string name="wrong_auth_data">Wrong login or password</string>
     <string name="uncorrect_type">uncorrect type</string>
     <string name="forget_password">forget password?</string>
+
+    <string name="payments">payments</string>
+    <string name="id">id</string>
+    <string name="title">title</string>
+    <string name="amount">amount</string>
+    <string name="created">created</string>
+
+    <string name="user_home">User home</string>
+    <string name="logout">Logout</string>
 </resources>

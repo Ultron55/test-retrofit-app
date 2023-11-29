@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import test.task.app.MainActivity
 import test.task.app.MainViewModel
 import test.task.app.databinding.LoginBinding
 import test.task.app.utils.LOGIN
 import test.task.app.utils.PASSWORD
+import test.task.app.utils.safeNavigate
 
 class LoginFragment: Fragment() {
 
@@ -43,9 +45,8 @@ class LoginFragment: Fragment() {
         viewModel.loginIs.observe(viewLifecycleOwner) {
             if (_binding != null)
             {
-                if (it) {
-
-                }
+                if (it)
+                    safeNavigate(findNavController(), LoginFragmentDirections.loginToSplash())
                 else if (isInLogining)
                     binding.wrongAuthDataTV.visibility = View.VISIBLE
             }
