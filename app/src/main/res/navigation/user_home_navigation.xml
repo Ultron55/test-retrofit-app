@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/payments_nav"
-        android:name="test.task.app.userhome.PaymentsFragment"
+        android:name="test.task.app.userhome.payments.PaymentsFragment"
         android:label="@string/payments"
         tools:layout="@layout/payments">
     </fragment>

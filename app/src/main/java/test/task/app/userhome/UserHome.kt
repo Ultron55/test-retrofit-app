@@ -29,7 +29,6 @@ class UserHome : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
-        viewModel.getPayments()
         binding.navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.logout_menu_item -> {

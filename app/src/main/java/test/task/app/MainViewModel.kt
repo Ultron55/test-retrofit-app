@@ -11,6 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import test.task.app.api.RetrofitAPI
+import test.task.app.authorization.Payment
 import test.task.app.authorization.Payments
 import test.task.app.authorization.Token
 import test.task.app.authorization.User
@@ -53,22 +54,25 @@ class MainViewModel @Inject constructor(val preferences: PreferencesContract) : 
         return token != null
     }
 
-    fun getPayments() {
+    fun getPayments(callback : (payments : List<Payment>?) -> Unit) {
         if (RetrofitAPI.token == null) return
         RetrofitAPI.retrofitServices.getPayments(RetrofitAPI.token!!)
             .enqueue(object : Callback<Payments> {
                 override fun onResponse(call: Call<Payments>?, response: Response<Payments>?) {
-                    if (response == null) inDevDebugLog(null)
+                    if (response == null) {
+                        callback(null)
+                    }
                     else {
-                        inDevDebugLog(response.body())
                         response.body().response.forEach{
                             inDevDebugLog("${it.id} ${it.title} ${it.amount} ${it.created}")
                         }
+                        callback(response.body().response)
                     }
                 }
 
                 override fun onFailure(call: Call<Payments>?, t: Throwable?) {
                     Log.e("getPayments", t?.message.toString())
+                    callback(null)
                 }
             })
     }

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="12dp"
+    android:background="@drawable/border_radius"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/payment_titleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FAF1F1"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="5dp"
+        android:textAlignment="center"
+        android:textColor="#252525"
+        android:textSize="16sp"
+        tools:text="Title323412" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/payment_amount_labelTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FAF1F1"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:text="@string/amount"
+            android:textColor="#252525"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/payment_amountTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:textAlignment="center"
+            android:textColor="#252525"
+            android:textSize="16sp"
+            tools:text="12314.1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/payment_id_labelTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FAF1F1"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:text="@string/id"
+            android:textColor="#252525"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/payment_idTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:textColor="#252525"
+            android:textSize="16sp"
+            tools:text="12" />
+
+        <TextView
+            android:id="@+id/payment_created_labelTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FAF1F1"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:text="@string/created"
+            android:textColor="#252525"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/payment_createdTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:textAlignment="textEnd"
+            android:textColor="#252525"
+            android:textSize="16sp"
+            tools:text="12.12.2011" />
+    </LinearLayout>
+
+</LinearLayout>
