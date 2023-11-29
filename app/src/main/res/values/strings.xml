@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Test App</string>
+
+    <string name="splash">Splash</string>
+    <string name="auth">Auth</string>
+
+    <string name="login">Login</string>
+    <string name="registration">Registration</string>
+
+    <string name="password">Password</string>
+
+    <string name="wrong_auth_data">Wrong login or password</string>
+    <string name="uncorrect_type">uncorrect type</string>
+    <string name="forget_password">forget password?</string>
+</resources>
