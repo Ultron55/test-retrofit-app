@@ -9,22 +9,24 @@ import retrofit2.http.POST
 import test.task.app.authorization.Payments
 import test.task.app.authorization.Token
 import test.task.app.authorization.User
+import test.task.app.utils.APP_KEY
+import test.task.app.utils.V
 
 interface RetrofitServices {
 
     @Headers(
         "Content-Type: application/json",
-        "app-key: 12345",
-        "v: 1"
+        "app-key: $APP_KEY",
+        "v: $V"
     )
-    @POST("/api-test/login")
+    @POST("login")
     fun postLogin(@Body user: User) : Call<Token>
 
     @Headers(
         "Content-Type: application/json",
-        "app-key: 12345",
-        "v: 1",
+        "app-key: $APP_KEY",
+        "v: $V"
     )
-    @GET("/api-test/payments")
+    @GET("payments")
     fun getPayments(@Header("token") token: String) : Call<Payments>
 }

@@ -33,10 +33,7 @@ class PaymentsFragment : Fragment() {
         binding.paymentsRV.layoutManager = LinearLayoutManager(requireContext())
         viewmodel.getPayments{
             binding.PrBPayments.visibility = View.INVISIBLE
-            if (it != null)
-            {
-                adapter.updateAllItem(it)
-            }
+            if (it != null) adapter.updateAllItem(it)
         }
     }
 

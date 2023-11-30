@@ -15,7 +15,6 @@ import test.task.app.authorization.Payment
 import test.task.app.authorization.Payments
 import test.task.app.authorization.Token
 import test.task.app.authorization.User
-import test.task.app.utils.inDevDebugLog
 import test.task.app.utils.preferences.PreferencesContract
 import javax.inject.Inject
 
@@ -63,9 +62,6 @@ class MainViewModel @Inject constructor(val preferences: PreferencesContract) : 
                         callback(null)
                     }
                     else {
-                        response.body().response.forEach{
-                            inDevDebugLog("${it.id} ${it.title} ${it.amount} ${it.created}")
-                        }
                         callback(response.body().response)
                     }
                 }
